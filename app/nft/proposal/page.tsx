@@ -3,7 +3,7 @@ import { sampleData } from "@/lib/SampleData";
 import { ContractData } from "@/lib/type";
 import React, { useState } from "react";
 import { Table, Tag, Button } from 'antd';
-import StepModal from "@/components/Checking/StepModal";
+// import StepModal from "@/components/Checking/StepModal";
 const getStatusTag = (status: number) => {
     switch (status) {
       case 0:
@@ -25,8 +25,8 @@ const contractData: ContractData[] = [
     customerWallet: "0x123...abc",
     contractId: "CON001",
     status: 0, // Pending
-    startDate: sampleData[0].startDate,
-    endDate: sampleData[0].endDate,
+    startDate: sampleData[0].startDate || "",
+    endDate: sampleData[0].endDate || "",
   },
   {
     id: "2",
@@ -36,8 +36,8 @@ const contractData: ContractData[] = [
     customerWallet: "0x456...def",
     contractId: "CON002",
     status: 0, // Approved
-    startDate: sampleData[1].startDate,
-    endDate: sampleData[1].endDate,
+    startDate: sampleData[1].startDate || "",
+    endDate: sampleData[1].endDate || "",
   },
 ];
 const Page: React.FC = () => {
@@ -103,13 +103,7 @@ const Page: React.FC = () => {
         pagination={{ pageSize: 3 }}
         style={{ backgroundColor: "#f0f2f5", borderRadius: "12px" }}
       />
-      {selectedContract && (
-        <StepModal
-          contract={selectedContract}
-          isVisible={isModalVisible}
-          onCancel={handleCancel}
-        />
-      )}
+      
     </div>
   );
 };
