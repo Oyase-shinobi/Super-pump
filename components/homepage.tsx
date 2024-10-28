@@ -96,14 +96,14 @@ function HomePage() {
             className="text-sm  md:text-xl lg:text-xl font-semibold  text-justify dark:text-zinc-400 max-w-4xl leading-relaxed lg:leading-snug lg:text-left"
           >
             <Highlight className="mb-2.5 text-5xl lg:text-7xl -top-9 font-bold">
-              Rental Billboard By OOH
+              Meme Pump on SuperPump
             </Highlight>
             {/* break line */} <br />
           
-            <span className="bg-primary bg-clip-text text-transparent">
-            OOH
+            <span className="text-[#28FF28]">
+            SuperPump
             </span>{" "}
-             is a platform that serves as an intermediary for billboard rental services. Users can post their available billboards, while others can search for and rent them in prime locations.
+             <span className="text-[#28FF28]" style={{WebkitTextStroke: '0.1px black'}}>is a meme launchpad and game marketplace platform. Users can launch their own meme tokens and trade game assets in a fun and engaging environment.</span>
           </motion.h1>
           <Link href="/pump">
           <div className="w-[240px] mt-10">

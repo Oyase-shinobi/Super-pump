@@ -68,15 +68,9 @@ export const Highlight = ({
 }) => {
   const colors = [
     "#FF0000", // Đỏ
-    
-    "#0000FF", // Lam
-    "#4B0082", // Chàm
-    
-    "#FF7F00", // Cam
-    "#FFFF00", // Vàng
     "#00FF00", // Lục
 
-    "#9400D3", // Tím
+ 
   ];
 
   return (
@@ -85,7 +79,7 @@ export const Highlight = ({
         color: colors,
       }}
       transition={{
-        duration: 0.4, // Giảm thời gian để màu thay đổi nhanh hơn
+        duration: 5, // Giảm thời gian để màu thay đổi nhanh hơn
         ease: "linear",
         repeat: Infinity,
       }}
