@@ -79,7 +79,7 @@ function HomePage() {
             <span className="text-[#28FF28]">
             SuperPump
             </span>{" "}
-             <span className="text-[#28FF28]" style={{WebkitTextStroke: '0.1px black'}}>is a meme launchpad and game marketplace platform. Users can launch their own meme tokens and trade game assets in a fun and engaging environment.</span>
+             <span className="text-[#28FF28]" style={{WebkitTextStroke: '0.1px black'}}>is a meme launchpad and game marketplace platform 🚀. Users can launch their own meme tokens and trade game assets in a fun and engaging environment.</span>
           </motion.h1>
           <Link href="/pump">
           <div className="w-[240px] mt-10">
