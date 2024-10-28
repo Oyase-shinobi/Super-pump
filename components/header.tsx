@@ -48,7 +48,7 @@ function Header() {
                   key={index}
                   className={`py-1 transition-all duration-300 transform ${
                     isActive
-                      ? "scale-105 shadow-lg border-r-4 border-b-4 border-solid border-[#d4b3ac]  bg-[#e9e1df] p-2 rounded-lg"
+                      ? "scale-105 shadow-lg border-r-4 border-b-4 border-solid border-green-500 bg-red-500 p-2 rounded-lg"
                       : ""
                   }`}
                 >
