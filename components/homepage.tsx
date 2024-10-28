@@ -10,7 +10,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { nftAbi } from "./nft-abi";
+  // import { nftAbi } from "./nft-abi";
 import { Hero, Highlight } from "./ui/hero";
 import dynamic from "next/dynamic";
 import { useChainId } from "wagmi";
