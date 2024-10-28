@@ -3,7 +3,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.gif";
 import { usePathname } from "next/navigation";
 
 function Header() {
