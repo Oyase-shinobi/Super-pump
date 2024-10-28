@@ -32,72 +32,19 @@ const FilterBillBoard = ({ onFilter }:Pros) => {
       <Form layout="vertical" onFinish={handleSubmit}>
 
         {/* Country */}
-        <Form.Item
-          name="country"
-          label={<label style={{ color: 'white' }}>Country</label>}
-          style={{ marginBottom: '12px' }}
-        >
-          <CountryDropdown
-            value={country}
-            onChange={handleCountryChange}
-            classes="rounded-lg h-[30px] w-full"
-          />
-        </Form.Item>
+        <input 
+        type="text" 
+        placeholder="search for token" 
+        className="flex-1 p-2 rounded-lg border border-gray-300 focus:outline-none focus:border-green-500"
+      />
 
-        {/* City */}
-        {country && (
-          <Form.Item
-            name="city"
-            label={<label style={{ color: 'white' }}>City</label>}
-            style={{ marginBottom: '12px' }}
-          >
-            <RegionDropdown
-              country={country}
-              value={region}
-              onChange={(val) => setRegion(val)}
-              classes="rounded-lg h-[30px] w-full"
-            />
-          </Form.Item>
-        )}
-
-        {/* Price Range Slider */}
-        <Form.Item label={<label style={{ color: 'white' }}>Price Range</label>}>
-          <Slider
-            range
-            step={100}
-            min={500}
-            max={20000}
-            defaultValue={priceRange}
-            onChange={(value) => setPriceRange(value)}
-          />
-          <div className="flex justify-between text-white">
-            <span>${priceRange[0]}</span>
-            <span>${priceRange[1]}</span>
-          </div>
-        </Form.Item>
-
-        {/* Size Range Slider */}
-        <Form.Item label={<label style={{ color: 'white' }}>Billboard Size (sq.ft.)</label>}>
-          <Slider
-            range
-            step={10}
-            min={50}
-            max={1000}
-            defaultValue={sizeRange}
-            onChange={(value) => setSizeRange(value)}
-          />
-          <div className="flex justify-between text-white">
-            <span>{sizeRange[0]} sq.ft.</span>
-            <span>{sizeRange[1]} sq.ft.</span>
-          </div>
-        </Form.Item>
-
-        {/* Search Button */}
-        <Form.Item>
-          <Button type="primary" variant='solid' color='default' htmlType="submit" block>
-            Search
-          </Button>
-        </Form.Item>
+       
+<button 
+        onClick={handleSubmit}
+        className="bg-green-400 hover:bg-green-500 text-black px-4 py-2 rounded-lg"
+      >
+        search
+      </button>
       </Form>
     </div>
   );

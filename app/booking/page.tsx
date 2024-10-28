@@ -10,7 +10,7 @@ import {
   BLOCK_EXPLORER_BAOBAB,
   CHAINID,
 } from "@/components/contract";
-import { erc20Abi } from "@/components/erc20-abi";
+import { tokenAbi } from "@/components/token-abi";
 import { readContract } from "@wagmi/core";
 import { config } from "../config";
 import { Billboard } from "@/lib/type";
@@ -46,7 +46,7 @@ const page = () => {
     if (account.address && tokenAddress) {
       try {
         const newestTokenId = await readContract(config, {
-          abi: erc20Abi,
+          abi: tokenAbi,
           address: tokenAddress,
           functionName: "getTokenIdNewestOOH_NFT",
           args: [],
@@ -56,7 +56,7 @@ const page = () => {
         console.log(newestTokenIdInt);
         for (let tokenId = 0; tokenId < Number(newestTokenIdInt); tokenId++) {
           const tokenURI = await readContract(config, {
-            abi: erc20Abi,
+            abi: tokenAbi,
             address: tokenAddress,
             functionName: "tokenURI",
             args: [BigInt(tokenId)],

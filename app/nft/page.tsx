@@ -10,7 +10,7 @@ import {
   CHAINID,
 } from "@/components/contract";
 import { readContract } from "@wagmi/core";
-import { erc20Abi } from "@/components/erc20-abi";
+import { tokenAbi } from "@/components/token-abi";
 import { config } from "../config";
 import { Billboard } from "@/lib/type";
 
@@ -44,7 +44,7 @@ const page = () => {
     if (account.address && tokenAddress) {
       try {
         const response = await readContract(config, {
-          abi: erc20Abi,
+          abi: tokenAbi,
           address: tokenAddress,
           functionName: 'getOOH_NFTs',
           args: [account.address],
@@ -52,7 +52,7 @@ const page = () => {
 
         const billboards = await Promise.all(response.map(async (tokenId) => {
           const tokenURI = await readContract(config, {
-            abi: erc20Abi,
+            abi: tokenAbi,
             address: tokenAddress,
             functionName: 'tokenURI',
             args: [BigInt(tokenId)],

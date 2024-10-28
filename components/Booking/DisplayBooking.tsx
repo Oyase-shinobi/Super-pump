@@ -32,12 +32,11 @@ const DisplayBooking = ({data}: {data: Billboard[]}) => {
   };
 
   return (
-    <div className="w-full min-h-screen flex">
-      <div className="w-[20%] backdrop-blur-lg">
-        <FilterBillBoard onFilter={handleFilter} />
-      </div>
-      <div className="w-[80%]">
-        <BillboardGrid dataCard={filteredData} />
+    <div className="w-full min-h-screen flex flex-col">
+      <div className="w-full flex justify-center py-12">
+        <div className="w-[70%] max-w-3xl">
+          <FilterBillBoard onFilter={handleFilter} />
+        </div>
       </div>
     </div>
   );
