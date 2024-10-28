@@ -14,7 +14,7 @@ import { nftAbi } from "./nft-abi";
 import { Hero, Highlight } from "./ui/hero";
 import dynamic from "next/dynamic";
 import { useChainId } from "wagmi";
-import { CONTRACT_NFT_ADDRESS_BAOBAB, CONTRACT_NFT_ADDRESS_CYPRESS } from "./contract";
+// import { CONTRACT_NFT_ADDRESS_BAOBAB, CONTRACT_NFT_ADDRESS_CYPRESS } from "./contract";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import HeroImage from "./svgcomponents/HeroImage";
@@ -42,30 +42,6 @@ function HomePage() {
     resolver: zodResolver(formSchema),
   });
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Convert 'to' address to appropriate format
-    try {
-      await writeContract({
-        abi: nftAbi,
-        address:
-          chainId === 1001 ? CONTRACT_NFT_ADDRESS_BAOBAB : CONTRACT_NFT_ADDRESS_CYPRESS,
-        functionName: "shootingShitNFT",
-        args: [`0x${values.to.slice(2)}`], // Pass the 'to' and 'uri' values as arguments
-      });
-      toast({
-        variant: "default",
-        className: "bg-white",
-        title: "Transaction successful",
-        description: "Shoot HackFi NFT minted successfully!",
-      });
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Transaction reverted",
-        description: `${(error as BaseError).shortMessage.split(":")[1]}`,
-      });
-    }
-  }
 
   function truncateAddress(address: string) {
     return `${address.slice(0, 6)}...${address.slice(-6)}`;
