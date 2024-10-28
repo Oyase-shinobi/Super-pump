@@ -12,8 +12,8 @@ import { ConfigProvider } from "antd";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mega-Board",
-  description: "Shoot HackFi NFT for your friends",
+  title: "SuperPump",
+  description: "SuperPump",
 };
 
 export default function RootLayout({

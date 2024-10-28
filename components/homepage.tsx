@@ -105,9 +105,9 @@ function HomePage() {
             </span>{" "}
              is a platform that serves as an intermediary for billboard rental services. Users can post their available billboards, while others can search for and rent them in prime locations.
           </motion.h1>
-          <Link href="/booking">
+          <Link href="/pump">
           <div className="w-[240px] mt-10">
-          <CustomButton content="Booking now" onclick={()=>{}} />
+          <CustomButton content="Pump now" onclick={()=>{}} />
 
           </div>
 

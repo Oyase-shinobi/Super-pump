@@ -32,7 +32,7 @@ function Header() {
               alt="logo"
             />
             <div className="ml-4 text-white -top-9 font-bold text-xs md:text-xl lg:text-xl lg:font-semibold max-w-4xl leading-relaxed lg:leading-snug text-left mx-auto">
-              Mega-Board
+              <span className="text-red-500">S</span>uper<span className="text-green-500">P</span>ump
             </div>
           </Link>
         </div>
