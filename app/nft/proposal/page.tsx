@@ -3,7 +3,6 @@ import { sampleData } from "@/lib/SampleData";
 import { ContractData } from "@/lib/type";
 import React, { useState } from "react";
 import { Table, Tag, Button } from 'antd';
-// import StepModal from "@/components/Checking/StepModal";
 const getStatusTag = (status: number) => {
     switch (status) {
       case 0:
