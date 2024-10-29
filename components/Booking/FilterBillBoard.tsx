@@ -1,23 +1,29 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import { Form, Button, Slider } from 'antd';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-interface Pros{
-    onFilter: (filters:any)=>void
+import Link from 'next/link'; // Import Link từ next/link
+
+interface Props {
+    onFilter: (filters: any) => void;
 }
-const FilterBillBoard = ({ onFilter }:Pros) => {
+
+const FilterBillBoard = ({ onFilter }: Props) => {
   const [country, setCountry] = useState('');
   const [region, setRegion] = useState('');
   const [priceRange, setPriceRange] = useState([500, 20000]);
   const [sizeRange, setSizeRange] = useState([100, 1000]);
+  const [showAnimations, setShowAnimations] = useState(false);
+  const [showMigratedToken, setShowMigratedToken] = useState(false);
+  const [sortOrder, setSortOrder] = useState('bump-order');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleCountryChange = (val:any) => {
+  const handleCountryChange = (val: any) => {
     setCountry(val);
-    setRegion(''); // Reset city when country changes
+    setRegion(''); // Reset region when country changes
   };
 
   const handleSubmit = () => {
-    // Pass all filters back, even if some are not selected
     const filterData = {
       country: country || undefined,
       region: region || undefined,
@@ -27,25 +33,90 @@ const FilterBillBoard = ({ onFilter }:Pros) => {
     onFilter(filterData);
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearch = () => {
+    console.log('Searching for:', searchTerm);
+  };
+
   return (
     <div className="h-full flex flex-col p-4 rounded-lg text-white justify-center">
-      <Form layout="vertical" onFinish={handleSubmit}>
+      {/* Double Up Create Token Section */}
+      <div className="bg-black text-white min-h-screen flex items-center justify-center"> 
+        <div className="container mx-auto px-8 sm:px-20 py-8 sm:py-35 space-y-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold" style={{ color: 'rgb(199, 251, 81)' }}>[create a new token]</h2>
+          </div>
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold" style={{ color: 'rgb(199, 251, 81)' }}>The Shining Star</h2>
+          </div>
+          <main className="content w-full flex flex-col gap-8 items-center">
+            {/* Info Block */}
+            <div className="info-block p-4 border border-gray-300 rounded-lg flex flex-col items-center bg-gray-800">
+              <p>Created by 0x8e6de4...5e8a2c87</p>
+              <p className="symbol">PEACEMAKER (symbol: PEACE)</p>
+              <p>Market cap: 7.39K</p>
+              <a href="#">
+                <img 
+                  src="https://avatars.githubusercontent.com/u/126134422?v=4" 
+                  alt="Token Icon" 
+                  className="w-20 h-20" 
+                />
+              </a>
+            </div>
 
-        {/* Country */}
-        <input 
-        type="text" 
-        placeholder="search for token" 
-        className="flex-1 p-2 rounded-lg border border-gray-300 focus:outline-none focus:border-green-500"
-      />
+            {/* Search Container */}
+            <div className="search-container flex gap-4 items-center w-full justify-center bg-gray-800 p-4 rounded-lg">
+              <input
+                type="text"
+                className="search-box flex-1 rounded-full border border-white/50 transition-colors hover:bg-gray-700 px-4 py-2"
+                placeholder="search for token"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <button
+                className="search-button rounded-full bg-blue-500 text-white hover:bg-blue-600 px-4 py-2" 
+                onClick={handleSearch}
+              >
+                Search
+              </button>
+            </div>
 
-       
-<button 
-        onClick={handleSubmit}
-        className="bg-green-400 hover:bg-green-500 text-black px-4 py-2 rounded-lg"
-      >
-        search
-      </button>
-      </Form>
+            {/* Sort Order */}
+            <div className="sort-order flex gap-4 items-center justify-center bg-gray-800 p-4 rounded-lg">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="show-animations"
+                  checked={showAnimations}
+                  onChange={() => setShowAnimations(!showAnimations)}
+                />
+                Show animations
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="show-migrated-token"
+                  checked={showMigratedToken}
+                  onChange={() => setShowMigratedToken(!showMigratedToken)}
+                />
+                Show migrated token
+              </label>
+              <select
+                id="sort-order"
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                className="rounded-full border border-white/50 transition-colors hover:bg-gray-700 px-4 py-2"
+              >
+                <option value="bump-order">Bump order</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
   );
 };
