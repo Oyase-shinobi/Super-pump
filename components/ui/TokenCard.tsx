@@ -40,7 +40,7 @@ export function TokenCard({
         functionName: "buy",
         value: BigInt(10000000000000000), // 0.01 ETH
         args: [
-          creatorAddress, // token address
+          creatorAddress as `0x${string}`, // token address
           BigInt(10000000000000000), // amount
           BigInt(10000000000000000), // minTokens
         ],
