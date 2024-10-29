@@ -58,7 +58,7 @@ const page = () => {
           args: [account.address],
         });
 
-        const billboards = await Promise.all(response.map(async (tokenId: any) => {
+        const billboards = await Promise.all((response as number[]).map(async (tokenId) => {
           const tokenURI = await readContract(config, {
             abi: tokenAbi,
             address: tokenAddress,
@@ -66,7 +66,7 @@ const page = () => {
             args: [BigInt(tokenId)],
           });
 
-          const res = await fetch(tokenURI);
+          const res = await fetch(tokenURI as string);
           const data = await res.json();
           return data as Billboard;
         }));
