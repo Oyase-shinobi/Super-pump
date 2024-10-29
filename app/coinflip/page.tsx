@@ -23,6 +23,14 @@ const page = () => {
   let blockexplorer: string;
   let tokenAddress: `0x${string}`;
 
+
+  useEffect(() => {
+    if (account.isConnected) {
+      fetchingData();
+    }
+  }, [account.isConnected]);
+
+  // Handle chain-specific values
   switch (chainId) {
     case CHAINID.BAOBAB:
       blockexplorer = BLOCK_EXPLORER_BAOBAB;
@@ -50,7 +58,7 @@ const page = () => {
           args: [account.address],
         });
 
-        const billboards = await Promise.all(response.map(async (tokenId) => {
+        const billboards = await Promise.all(response.map(async (tokenId: any) => {
           const tokenURI = await readContract(config, {
             abi: tokenAbi,
             address: tokenAddress,
@@ -76,16 +84,17 @@ const page = () => {
     }
   }
 
+  // Single wallet connection check
   if (!account.isConnected) {
     return (
-      <div className="w-full min-h-screen flex justify-center items-center">
+      <div className="w-full min-h-screen flex justify-center items-center bg-red-900">
         You need to connect your wallet
       </div>
     );
   }
  
   return (
-    <div className="w-full min-h-screen flex justify-center items-center">
+    <div className="w-full min-h-screen flex justify-center items-center bg-red-900">
       {isLoading ? (
         <div>Loading...</div>
       ) : (

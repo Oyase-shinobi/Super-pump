@@ -10,7 +10,7 @@ import {
   CHAINID,
  
 } from "@/components/contract";
-import { tokenABI } from "@/components/token-abi";
+import { tokenAbi } from "@/components/token-abi";
 interface TokenModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -24,7 +24,7 @@ const TokenModal: React.FC<TokenModalProps> = ({ isVisible, onCancel }) => {
   const onSubmit = async (values: any) => {
     if (account.address) {
       await writeContract({
-        abi: tokenABI,
+        abi: tokenAbi,
         address: CONTRACT_NFT_ADDRESS_MOONBEAM, // You'll need to define this
         functionName: "deployERC20Token",
         args: [

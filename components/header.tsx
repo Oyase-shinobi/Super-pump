@@ -11,9 +11,7 @@ function Header() {
   const pathname= usePathname()
 
   const navItems = [
-    { href: "/booking", label: "Booking" },
-
-    { href: "/nft", label: "NFT" },
+    { href: "/coinflip", label: "Coin Flip" },
 
   ];
 

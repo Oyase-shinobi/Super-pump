@@ -10,16 +10,13 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-  // import { nftAbi } from "./nft-abi";
-import { Hero, Highlight } from "./ui/hero";
+import { Hero } from "./ui/hero";
 import dynamic from "next/dynamic";
 import { useChainId } from "wagmi";
-// import { CONTRACT_NFT_ADDRESS_BAOBAB, CONTRACT_NFT_ADDRESS_CYPRESS } from "./contract";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import HeroImage from "./svgcomponents/HeroImage";
-import CustomButton from "./Button/CustomButton";
-// import HeroImage from "@/assets/HeroImage.svg";
+import { TokenCard } from "./ui/TokenCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const formSchema = z.object({
   to: z.coerce.string({
@@ -32,20 +29,39 @@ const formSchema = z.object({
   }),
 });
 
+// Mock data - replace with actual data fetching
+const MOCK_TOKENS = [
+  {
+    creatorAddress: "0x1234567890abcdef",
+    tokenName: "Cat Playin Golf",
+    marketCap: "6.95K",
+    replies: 18,
+    imageUrl: "/cat-golf.jpg",
+    timestamp: "2h ago",
+    ticker: "CPG",
+    description: "simply a cat playin golf",
+    isLive: true,
+  },
+  {
+    creatorAddress: "0xabcdef1234567890",
+    tokenName: "just imagine",
+    marketCap: "52.89K",
+    replies: 146,
+    imageUrl: "/imagine.jpg",
+    timestamp: "4h ago",
+    ticker: "imagine",
+  },
+  // Add more mock tokens as needed
+];
+
 function HomePage() {
   const { toast } = useToast();
   let chainId = useChainId();
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-  // 2. Define a submit handler.
-
-  function truncateAddress(address: string) {
-    return `${address.slice(0, 6)}...${address.slice(-6)}`;
-  }
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
@@ -53,52 +69,32 @@ function HomePage() {
     });
 
   return (
-    <div className="w-full ">
-      <Hero className="w-full flex items-center justify-center py-36px-10 gap-10">
-        <div>
-          <motion.h1
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: [20, -5, 0],
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.4, 0.0, 0.2, 1],
-            }}
-            className="text-sm  md:text-xl lg:text-xl font-semibold  text-justify dark:text-zinc-400 max-w-4xl leading-relaxed lg:leading-snug lg:text-left"
-          >
-            <Highlight className="mb-2.5 text-5xl lg:text-7xl -top-9 font-bold">
-              Meme Pump on SuperPump
-            </Highlight>
-            {/* break line */} <br />
+    <div className="min-h-screen bg-zinc-900 pt-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <Tabs defaultValue="following" className="w-full">
+          <TabsList className="mb-8 flex space-x-2 overflow-x-auto">
+            <TabsTrigger className="min-w-[100px]" value="following">Following</TabsTrigger>
+            <TabsTrigger className="min-w-[100px]" value="terminal">Terminal</TabsTrigger>
+          </TabsList>
           
-            <span className="text-[#28FF28]">
-            SuperPump
-            </span>{" "}
-             <span className="text-[#28FF28]" style={{WebkitTextStroke: '0.1px black'}}>is a meme launchpad and game marketplace platform 🚀. Users can launch their own meme tokens and trade game assets in a fun and engaging environment.</span>
-          </motion.h1>
-          <Link href="/pump">
-          <div className="w-[240px] mt-10">
-          <CustomButton content="Pump now" onclick={()=>{}} />
-
-          </div>
-
-            {/* <Button
-              variant="default"
-              size="default"
-              className="bg-black flex mt-6 text-white">
-              Shoot HackFi Now
-            </Button> */}
-          </Link>
-        </div>
-        <div className="w-[30%] hidden lg:block">
-          {/* <HeroImage /> */}
-        </div>
-      </Hero>
+          <TabsContent value="following">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {MOCK_TOKENS.map((token, index) => (
+                <TokenCard
+                  key={index}
+                  {...token}
+                />
+              ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="terminal">
+            <div className="text-zinc-400">
+              Terminal content here
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
