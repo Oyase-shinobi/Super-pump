@@ -1,21 +1,8 @@
-import { Badge } from "./badge";
-import Image from "next/image";
-import logoGif from "@/assets/logo.gif";
-
-interface TokenCardProps {
-  creatorAddress: string;
-  tokenName: string;
-  marketCap: string;
-  replies: number;
-  timestamp: string;
-  ticker?: string;
-  description?: string;
-  isLive?: boolean;
-}
-
-function truncateAddress(address: string) {
-  return `${address.slice(0, 6)}...${address.slice(-6)}`;
-}
+import { Button } from "@/components/ui/button";
+import { useWriteContract } from 'wagmi';
+import { useToast } from "@/components/ui/use-toast";
+import { CHAINID } from "../contract";
+import Link from "next/link";
 
 export function TokenCard({
   creatorAddress,
@@ -24,47 +11,89 @@ export function TokenCard({
   replies,
   timestamp,
   ticker,
-  description,
-}: TokenCardProps) {
+}: {
+  creatorAddress: string;
+  tokenName: string;
+  marketCap: string;
+  replies: number;
+  timestamp: string;
+  ticker: string;
+}) {
+  const { toast } = useToast();
+  const { writeContract } = useWriteContract();
+
+  const handleBuyToken = async () => {
+    try {
+      await writeContract({
+        address: "0x4fe8ea21679b3ee10457a097c38452a94edab33b",
+        abi: [{
+          name: "buy",
+          type: "function",
+          stateMutability: "payable",
+          inputs: [
+            { type: "address", name: "tokenAddress" },
+            { type: "uint256", name: "amount" },
+            { type: "uint256", name: "minTokens" }
+          ],
+          outputs: [],
+        }],
+        functionName: "buy",
+        value: BigInt(10000000000000000), // 0.01 ETH
+        args: [
+          creatorAddress, // token address
+          BigInt(10000000000000000), // amount
+          BigInt(10000000000000000), // minTokens
+        ],
+        chainId: CHAINID.MOONBEAM,
+        gas: BigInt(2000000),
+      });
+
+      toast({
+        title: "Success",
+        description: "Buy token transaction submitted",
+      });
+    } catch (error) {
+      console.error("Error buying token:", error);
+      toast({
+        title: "Error",
+        description: `Failed to buy token: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      });
+    }
+  };
+
   return (
-    <div className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700 hover:border-zinc-600 transition-all">
-      <div className="flex items-start gap-4">
-        <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-black/20">
-          <img 
-            src={logoGif.src} 
-            alt={tokenName}
-            className="w-full h-full object-contain"
-          />
+    <div className="rounded-lg border p-4 space-y-4 bg-white/5 backdrop-blur-sm">
+      <div className="flex items-center space-x-4">
+        <div className="flex-1 space-y-1">
+          <div className="flex items-center space-x-2">
+            <h3 className="text-sm font-semibold">{tokenName}</h3>
+            <span className="text-xs text-zinc-500">{timestamp}</span>
+          </div>
+          <p className="text-xs text-zinc-500">
+            Created by{" "}
+            <Link href={`https://moonscan.io/address/${creatorAddress}`} target="_blank" className="text-blue-500 hover:underline">
+              {`${creatorAddress.slice(0, 6)}...${creatorAddress.slice(-4)}`}
+            </Link>
+          </p>
         </div>
-        <div className="flex-1">
-          <div className="flex items-center justify-between mb-1">
-            <div className="flex items-center gap-2">
-              <span className="text-green-400 text-sm">Created by</span>
-              <Badge variant="outline" className="text-xs">
-                {truncateAddress(creatorAddress)}
-              </Badge>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-white font-medium">{tokenName}</h3>
-            {ticker && (
-              <span className="text-zinc-400 text-sm">
-                (ticker: {ticker})
-              </span>
-            )}
-          </div>
-          {description && (
-            <p className="text-zinc-400 text-sm mb-1">{description}</p>
-          )}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-400 text-sm">market cap:</span>
-              <span className="text-green-400 text-sm">{marketCap}</span>
-            </div>
-            <div className="text-zinc-400 text-sm">replies: {replies}</div>
-            <div className="text-zinc-500 text-sm">{timestamp}</div>
-          </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <p className="text-zinc-500">Market Cap</p>
+          <p className="font-medium">{marketCap}</p>
         </div>
+        <div>
+          <p className="text-zinc-500">Ticker</p>
+          <p className="font-medium">{ticker}</p>
+        </div>
+      </div>
+      <div className="flex justify-between items-center space-x-4">
+        <Button 
+          onClick={handleBuyToken} 
+          className="w-full bg-blue-600 hover:bg-blue-700"
+        >
+          Buy Token
+        </Button>
       </div>
     </div>
   );

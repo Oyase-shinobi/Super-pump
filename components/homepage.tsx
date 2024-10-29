@@ -23,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Input } from "./ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { config } from "@/app/config";
 
 const formSchema = z.object({
   to: z.coerce.string({
@@ -89,8 +90,8 @@ function HomePage() {
       console.error("Error creating token:", error);
       toast({
         title: "Error",
-        description: `Failed to create token: ${error.message}`, // More detailed error message
-      });
+        description: `Failed to create token: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    });
     }
   };
 
@@ -101,7 +102,7 @@ function HomePage() {
 
   const fetchTokens = async () => {
     try {
-      const data = await readContract({
+      const data = await readContract(config, {
         address: MEME_LAUNCHPAD_ADDRESS_MOONBEAM,
         abi: [
           {
